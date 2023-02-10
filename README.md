@@ -35,6 +35,7 @@ This resource includes:
 <p>Drag and drop the images into ox_inventory: [ox_inventory\web\images]</p>
 <p>Copy and paste the items into ox_inventory: [ox_inventory\data\items.lua]</p>
 <p>Copy and past the mining shop into ox_inventory: [ox_inventory\data\shops.lua]</p>
+<p>Start dom_mining after dependencies</p>
 
 ## Need Support?
 <a href='https://discord.gg/GH4fdmMG5b/'>Discord</a>
