@@ -44,17 +44,23 @@ function GemCheck()
         end 
 end 
 
+local isBreakdown = false 
 RegisterNetEvent("mining:gemBreakdown", function()
-    local cfg = Config.Notifications[1]
-    if GemCheck() == true then 
-    local success = Inventory:CanCarryItem(source, 'water', 1)
-        if success then 
-            TriggerClientEvent("mining:drillCircle", source)
-        else 
-            lib.notify(source, cfg.GemNotEnoughSpace)
+    if isBreakdown == false then 
+        isBreakdown = true
+        local cfg = Config.Notifications[1]
+        if GemCheck() == true then 
+        local success = Inventory:CanCarryItem(source, 'water', 1)
+            if success then 
+                TriggerClientEvent("mining:drillCircle", source)
+            else 
+                lib.notify(source, cfg.GemNotEnoughSpace)
+            end 
+        else
+            lib.notify(source, cfg.GemNoRock)
         end 
-    else
-        lib.notify(source, cfg.GemNoRock)
+        Wait(Config.Drill[1].Time)
+        isBreakdown = false 
     end 
 end)
 
@@ -141,14 +147,20 @@ RegisterNetEvent("mining:mineRock", function(data)
     end
 end)
 
+local isProcess = false 
 RegisterNetEvent("mining:Process", function(input)
-    local cfg = Config.Notifications[1]
-    local gemRocks = math.floor(input[2] / 5)
-    if ProcessCheck(input) == true then 
-        TriggerClientEvent("mining:processCircle", source, input, gemRocks)
-    else 
-        lib.notify(source, cfg.ProcessNoDirt)
-    end 
+    if isProcess == false then 
+        isProcess = true
+        local cfg = Config.Notifications[1]
+        local gemRocks = math.floor(input[2] / 5)
+        if ProcessCheck(input) == true then 
+            TriggerClientEvent("mining:processCircle", source, input, gemRocks)
+        else 
+            lib.notify(source, cfg.ProcessNoDirt)
+        end 
+        Wait(Config.Process[1].time)
+        isProcess = false 
+    end
 end)
 
 RegisterNetEvent("mining:Reward", function(reward)
