@@ -72,64 +72,73 @@ function CanMine(reward)
     end 
 end 
 
+local isMining = false 
 RegisterNetEvent("mining:mineRock", function(data)
-    math.randomseed(os.time())
-    local cfg = Config.Mining
-    local jackhammer = Inventory:Search(source, 'count', 'jackhammer', false)
-    local pickaxe = Inventory:Search(source, 'count', 'pickaxe', false)
-    local shovel = Inventory:Search(source, 'count', 'shovel', false)
+    if isMining == false then 
+        isMining = true
+        math.randomseed(os.time())
+        local cfg = Config.Mining
+        local jackhammer = Inventory:Search(source, 'count', 'jackhammer', false)
+        local pickaxe = Inventory:Search(source, 'count', 'pickaxe', false)
+        local shovel = Inventory:Search(source, 'count', 'shovel', false)
 
-    if jackhammer >= 1 then 
-        local time = cfg[1].Time
-        local reward = math.random(cfg[1].MinReward, cfg[1].MaxReward)
-        local animation = {
-            dict = 'amb@world_human_const_drill@male@drill@base',
-            clip = 'base'
-        }
-        local props = {
-            model = 'prop_tool_jackham',
-            bone = 28422,
-            pos = vec3(0.05, 0.00, 0.00),
-            rot = vec3(0.0, 0.0, 0.0)
-        }
-        if CanMine(reward) then 
-            TriggerClientEvent("mining:progressBar", source, time, reward, data, animation, props)
-        end
-    elseif pickaxe >= 1 then 
-        local time = cfg[2].Time
-        local reward = math.random(cfg[2].MinReward, cfg[2].MaxReward)
-        local animation = {
-            dict = 'melee@large_wpn@streamed_core',
-            clip = 'ground_attack_0'
-        }
-        local props = {
-            model = 'prop_tool_pickaxe',
-            bone = 28422,
-            pos = vec3(0.05, 0.00, 0.00),
-            rot = vec3(-70.0, 30.0, 0.0)
-        }
-        if CanMine(reward) then 
-            TriggerClientEvent("mining:progressBar", source, time, reward, data, animation, props)
-        end
-    elseif shovel >= 1 then 
-        local time = cfg[3].Time
-        local reward = math.random(cfg[3].MinReward, cfg[3].MaxReward)
-        local animation = {
-            dict = 'amb@world_human_gardener_plant@male@base',
-            clip = 'base'
-        }
-        local props = {
-            model = 'prop_cs_trowel',
-            bone = 28422,
-            pos = vec3(0.00, 0.00, 0.00),
-            rot = vec3(0.0, 0.0, -1.5)
-        }
-        if CanMine(reward) then 
-            TriggerClientEvent("mining:progressBar", source, time, reward, data, animation, props)
-        end
-    else 
-        NoTools()
-    end 
+        if jackhammer >= 1 then 
+            local time = cfg[1].Time
+            local reward = math.random(cfg[1].MinReward, cfg[1].MaxReward)
+            local animation = {
+                dict = 'amb@world_human_const_drill@male@drill@base',
+                clip = 'base'
+            }
+            local props = {
+                model = 'prop_tool_jackham',
+                bone = 28422,
+                pos = vec3(0.05, 0.00, 0.00),
+                rot = vec3(0.0, 0.0, 0.0)
+            }
+            if CanMine(reward) then 
+                TriggerClientEvent("mining:progressBar", source, time, reward, data, animation, props)
+                Wait(time)
+            end
+        elseif pickaxe >= 1 then 
+            local time = cfg[2].Time
+            local reward = math.random(cfg[2].MinReward, cfg[2].MaxReward)
+            local animation = {
+                dict = 'melee@large_wpn@streamed_core',
+                clip = 'ground_attack_0'
+            }
+            local props = {
+                model = 'prop_tool_pickaxe',
+                bone = 28422,
+                pos = vec3(0.05, 0.00, 0.00),
+                rot = vec3(-70.0, 30.0, 0.0)
+            }
+            if CanMine(reward) then 
+                TriggerClientEvent("mining:progressBar", source, time, reward, data, animation, props)
+                Wait(time)
+            end
+        elseif shovel >= 1 then 
+            local time = cfg[3].Time
+            local reward = math.random(cfg[3].MinReward, cfg[3].MaxReward)
+            local animation = {
+                dict = 'amb@world_human_gardener_plant@male@base',
+                clip = 'base'
+            }
+            local props = {
+                model = 'prop_cs_trowel',
+                bone = 28422,
+                pos = vec3(0.00, 0.00, 0.00),
+                rot = vec3(0.0, 0.0, -1.5)
+            }
+            if CanMine(reward) then 
+                TriggerClientEvent("mining:progressBar", source, time, reward, data, animation, props)
+                Wait(time)
+            end
+        else 
+            NoTools()
+        end 
+        
+        isMining = false
+    end
 end)
 
 RegisterNetEvent("mining:Process", function(input)
