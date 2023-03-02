@@ -158,7 +158,7 @@ RegisterNetEvent("mining:Process", function(input)
         else 
             lib.notify(source, cfg.ProcessNoDirt)
         end 
-        Wait(Config.Process[1].time)
+        Wait(Config.Process[1].Time)
         isProcess = false 
     end
 end)
