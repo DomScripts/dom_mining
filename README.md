@@ -38,4 +38,4 @@ This resource includes:
 <p>Start dom_mining after dependencies</p>
 
 ## Need Support?
-<a href='https://discord.gg/GH4fdmMG5b/'>Discord</a>
+<a href='https://discord.gg/GH4fdmMG5b'>Discord</a>
