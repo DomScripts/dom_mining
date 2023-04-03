@@ -2,6 +2,10 @@ local Inventory = exports.ox_inventory
 local Target = exports.ox_target
 local Input = lib.inputDialog
 
+local isBreakdown = false
+local isMining = false
+local isProcess = false 
+
 if Config.Blip.Toggle then 
   local blip = AddBlipForCoord(Config.Blip.Location)
   SetBlipSprite(blip, 1)
@@ -63,7 +67,11 @@ local drillOptions = {
       name = 'ox:option1',
       icon = 'fa-regular fa-gem',
       label = 'Open Gemrock',
-      serverEvent = "mining:gemBreakdown",
+      onSelect = function()
+        if isBreakdown then return end 
+        isBreakdown = true
+        TriggerServerEvent("mining:genBreakdown")
+      end 
   }
 }
 Target:addLocalEntity(drillSpawn, drillOptions)
@@ -81,6 +89,7 @@ RegisterNetEvent("mining:drillCircle", function()
     prop = {},
   }) 
   then 
+    isBreakdown = false
     TriggerServerEvent("mining:gemReward")
     local cfg = Config.Notifications[1]
     lib.notify(cfg.GemBreakSuccess)
@@ -108,6 +117,8 @@ Target:addSphereZone({
           if not input then
             return 
           else 
+            if isProcess then return end 
+            isProcess = true
             TriggerServerEvent("mining:Process", input)
           end 
          end
@@ -128,6 +139,7 @@ RegisterNetEvent("mining:processCircle", function(input, gemRocks)
     prop = {},
   }) 
   then 
+    isProcess = false
     TriggerServerEvent("mining:processReward", input, gemRocks)
     local cfg = Config.Notifications[1]
     lib.notify(cfg.ProcessSuccessReward)
@@ -151,6 +163,8 @@ local rockOptions = {{
   icon = 'fa-solid fa-hammer',
   label = 'Mine Rock',
   onSelect = function(data)
+    if isMining then return end 
+    isMining = true
     TriggerServerEvent("mining:mineRock", data)
   end 
 }}
@@ -167,6 +181,7 @@ RegisterNetEvent("mining:progressBar", function(time, reward, data, animation,pr
     prop = props,
   }) 
   then 
+    isMining = false
     local coords = GetEntityCoords(data.entity)
     TriggerServerEvent("mining:Reward", reward)
     DeleteEntity(data.entity)
