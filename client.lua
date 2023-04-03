@@ -2,6 +2,17 @@ local Inventory = exports.ox_inventory
 local Target = exports.ox_target
 local Input = lib.inputDialog
 
+if Config.Blip.Toggle then 
+  local blip = AddBlipForCoord(Config.Blip.Location)
+  SetBlipSprite(blip, 1)
+  SetBlipDisplay(blip, 2)
+  SetBlipScale(blip, Config.Blip.Scale)
+  SetBlipColour(blip, Config.Blip.Color)
+  AddTextEntry('MINING BLIP', 'Mining')
+  BeginTextCommandSetBlipName('MINING BLIP')
+  EndTextCommandSetBlipName(blip)
+end 
+
 function FetchModel(model)
   RequestModel(GetHashKey(model))
   while not HasModelLoaded(model) do 

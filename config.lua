@@ -1,5 +1,12 @@
 Config = {}
 
+Config.Blip = {
+    Toggle = true,
+    Location = vec3(2707.3708, 2776.7751, 36.8780),
+    Scale = 1.0,
+    Color = 47,
+}
+
 Config.Drill = {
     {
         DrillModel = 'gr_prop_gr_speeddrill_01b',
