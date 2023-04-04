@@ -57,7 +57,6 @@ RegisterNetEvent("mining:gemBreakdown", function()
             lib.notify(source, cfg.GemNoRock)
         end 
     Wait(Config.Drill[1].Time)
-    end 
 end)
 
 function CanMine(reward)
