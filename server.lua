@@ -53,9 +53,9 @@ RegisterNetEvent("mining:gemBreakdown", function()
             else 
                 lib.notify(source, cfg.GemNotEnoughSpace)
             end 
-        else
-            lib.notify(source, cfg.GemNoRock)
-        end 
+    else
+        lib.notify(source, cfg.GemNoRock)
+    end 
     Wait(Config.Drill[1].Time)
 end)
 
