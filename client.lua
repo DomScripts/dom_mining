@@ -70,7 +70,7 @@ local drillOptions = {
       onSelect = function()
         if isBreakdown then return end 
         isBreakdown = true
-        TriggerServerEvent("mining:genBreakdown")
+        TriggerServerEvent("mining:gemBreakdown")
       end 
   }
 }
@@ -95,10 +95,6 @@ RegisterNetEvent("mining:drillCircle", function()
     lib.notify(cfg.GemBreakSuccess)
   end
 end)
-
-RegisterCommand("despawnDrill", function(source)
-  DeleteEntity(drillSpawn)
-end, false)
 
 --! Process spawn + target options
 local cfg = Config.Process[1]
@@ -188,6 +184,18 @@ RegisterNetEvent("mining:progressBar", function(time, reward, data, animation,pr
     Wait(Config.Mining[4].RespawnTime)
     CreateRock(coords) 
   end
+end)
+
+RegisterNetEvent('dom_mining:ResetisMining', function()
+  isMining = false
+end)
+
+RegisterNetEvent('dom_mining:ResetisProcess', function()
+  isProcess = false
+end)
+
+RegisterNetEvent('dom_mining:ResetisBreakdown', function()
+  isBreakdown = false
 end)
 
 --! Distance check for NPC

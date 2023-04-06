@@ -31,6 +31,7 @@ function ProcessCheck(input)
     if buckets >= sum then 
         return true 
     else 
+        TriggerClientEvent('dom_mining:ResetisProcess', source)
         return false 
     end 
 end
@@ -51,9 +52,11 @@ RegisterNetEvent("mining:gemBreakdown", function()
             if success then 
                 TriggerClientEvent("mining:drillCircle", source)
             else 
+                TriggerClientEvent('dom_mining:ResetisBreakdown', source)
                 lib.notify(source, cfg.GemNotEnoughSpace)
             end 
     else
+        TriggerClientEvent('dom_mining:ResetisBreakdown', source)
         lib.notify(source, cfg.GemNoRock)
     end 
     Wait(Config.Drill[1].Time)
@@ -66,9 +69,11 @@ function CanMine(reward)
         if success then 
             return true 
         else
+            TriggerClientEvent('dom_mining:ResetisMining', source)
             NotEnoughSpace()
         end 
     else 
+        TriggerClientEvent('dom_mining:ResetisMining', source)
         NotEnoughBuckets()
     end 
 end 
@@ -132,6 +137,7 @@ RegisterNetEvent("mining:mineRock", function(data)
             Wait(time)
         end
     else 
+        TriggerClientEvent('dom_mining:ResetisMining', source)
         NoTools()
     end 
 end)
